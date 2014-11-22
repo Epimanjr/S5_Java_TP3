@@ -1,0 +1,149 @@
+//TP3
+//Exercice 1
+
+
+//Union
+Set union = new HashSet(s1);
+union.addAll(s2);
+//Intersection
+Set inter = new HashSet(s1);
+inter.retainAll(s2);
+//Diff?rence ensembliste
+Set diff = new HashSet(s1);
+diff.removeAll(s2);
+//Diff?rence sym?trique
+Set sym=new HashSet(s1);
+sym.addAll(s2);
+Set tmp = new HashSet(s1);
+tmp.retainAll(s2);
+sym.removeAll(tmp);
+//Tri de listes en fonction de la taille
+List l = new ArrayList();
+Collections.sort(l,new Comparator(){public int compare(Object o1,Object o2){return ((List)o2).size()-((List)o1).size();
+}}); 
+
+
+// Exercice 2
+public abstract class Etudiant implements Comparable{
+    private String nom, adresse;
+    private int numero;
+    public Etudiant() {
+      this("","",0);
+    }
+    public Etudiant(String nom, String adresse, int numero) {
+      this.nom = nom;
+      this.adresse = adresse;
+      this.numero = numero;
+    }
+    public String getNom(){
+      return nom;
+    }
+    public void setNom(String nom){
+      this.nom = nom;
+    }
+    public String getAdresse() {
+      return adresse;
+    }
+    
+    public void setAdresse(String adresse) {
+      this.adresse = adresse;
+    }
+    public int getNumero() {
+		return numero;
+	}
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	public int compareTo(Object o) {
+		if (this.numero < ((Etudiant)o).numero)
+			return -1;
+			else if (this.numero > ((Etudiant)o).numero)
+				return 1;
+			else return 0;
+	}
+	public String toString(){
+    	  return ("Nom : " + nom + "\nAdresse : " + adresse + "\nNumero: "+ numero);
+    }
+}
+
+
+public class Licence extends Etudiant{
+	private String parcours;
+	
+	public Licence () {
+		super();
+		parcours = "";
+	}
+	
+	public Licence(String nom, String address, int numero, String parcours){
+		super(nom,address,numero);
+		this.parcours = parcours;
+	}
+	public String getParcours() {
+		return parcours;
+	}
+	public void setParcours(String parcours) {
+		this.parcours = parcours;
+	}
+	
+	public String toString() {
+		String s = super.toString();
+		return s + "\nParcours : " + parcours;
+	}
+}
+
+
+public class Master extends Etudiant{
+	private String specialite;
+	
+	public Master () {
+		super();
+		specialite = "";
+	}
+	
+	public Master(String nom, String address, int numero, String specialite){
+		super(nom,address,numero);
+		this.specialite = specialite;
+	}
+	
+	public String getSpecialite() {
+		return specialite;
+	}
+	public void setSpecialite(String specialite) {
+		this.specialite = specialite;
+	}
+	public String toString() {
+		String s = super.toString();
+		return s + "\nSepcialite : " + specialite;
+	}
+}
+
+import java.util.*;
+public class Etudiants {
+	private ArrayList a = new ArrayList();
+		
+	public void add (Etudiant e) {
+		a.add(e);
+	}
+		
+	public String toString(){
+		Collections.sort(a);
+		String s = "";
+		for (Object o : a) {
+			s = s + o + "\n\n";
+		}
+		return s;
+	}
+}
+
+public class Test {
+	
+	public static void main(String args[]) {
+		Etudiants e = new Etudiants();
+		e.add(new Licence("Jack", "Nancy", 93986, "Miage"));
+		e.add(new Master("Vicki", "Lyon", 81974, "Bioinformatique"));
+		e.add(new Licence("Bill", "Toulouse", 82946, "Info"));
+		System.out.println(e);
+	}
+}
+
